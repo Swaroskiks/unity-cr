@@ -4,6 +4,7 @@ import MainLayout from '../views/MainLayout.vue'
 import TDsView from '../views/TDsView.vue'
 import ProjectView from '../views/ProjectView.vue'
 import AdminPage from '../views/AdminPage.vue'
+import AuthorsPage from '../views/AuthorsPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,7 +31,7 @@ const router = createRouter({
         {
           path: 'authors',
           name: 'authors',
-          component: { template: '<div>Auteurs (To be implemented)</div>' } // Placeholder
+          component: AuthorsPage
         }
       ]
     },
