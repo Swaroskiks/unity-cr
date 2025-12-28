@@ -1,0 +1,17 @@
+# ---- VS Code ----
+.vscode/# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# macOS metadata files
+._*
+
+# macOS volume root files
+.fseventsd
+.Spotlight-V100
+.Trashes
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
