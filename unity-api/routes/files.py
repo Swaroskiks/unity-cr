@@ -73,4 +73,4 @@ def upload_image():
         file.save(file_path)
         
         # Return the relative path or URL that the frontend should use
-        return jsonify({"url": f"/images/images/{filename}"}), 200
+        return jsonify({"url": f"/api/images/images/{filename}"}), 200
