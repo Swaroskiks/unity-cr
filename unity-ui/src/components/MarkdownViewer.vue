@@ -44,14 +44,23 @@ const processContent = async () => {
   };
 
   renderer.image = ({ href, title, text }) => {
+    const isAudio = href && (href.endsWith('.mp3') || href.endsWith('.wav') || href.endsWith('.ogg') || href.includes('/api/audio/'));
+    
+    let src = href;
     if (href && !href.startsWith('http') && !href.startsWith('data:')) {
-      // Assuming API_URL is http://127.0.0.1:5001, but we should import it or pass it.
-      // For simplicity, let's hardcode or use a relative path if the API serves static files correctly.
-      // Since our backend serves /images/<path>, we need to make sure the href matches.
-      // If href is like "/images/images/foo.png" (returned by upload), we prepend API base.
-      return `<img src="http://127.0.0.1:5001${href}" alt="${text}" title="${title || ''}" />`;
+      src = `http://127.0.0.1:5001${href}`;
     }
-    return `<img src="${href}" alt="${text}" title="${title || ''}" />`;
+
+    if (isAudio) {
+      return `
+        <div class="audio-player">
+          <p class="audio-title">${text || 'Audio'}</p>
+          <audio controls src="${src}"></audio>
+        </div>
+      `;
+    }
+    
+    return `<img src="${src}" alt="${text}" title="${title || ''}" />`;
   };
 
   renderedContent.value = await marked(props.content, { renderer });
@@ -197,6 +206,29 @@ onMounted(processContent);
   border: 1px solid #333;
   box-shadow: 0 4px 8px rgba(0,0,0,0.5);
   margin: 1.5rem 0;
+}
+
+:deep(.audio-player) {
+  background: #1a1a1a;
+  padding: 1.5rem;
+  border: 1px solid #333;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+}
+
+:deep(.audio-title) {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+:deep(audio) {
+  width: 100%;
+  height: 40px;
+  filter: invert(1) hue-rotate(180deg); /* Simple way to make it look better on dark theme */
 }
 
 :deep(table) {

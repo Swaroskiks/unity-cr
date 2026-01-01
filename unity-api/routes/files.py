@@ -74,3 +74,27 @@ def upload_image():
         
         # Return the relative path or URL that the frontend should use
         return jsonify({"url": f"/api/images/images/{filename}"}), 200
+@files_bp.route('/audio/<path:filename>', methods=['GET'])
+def get_audio(filename):
+    """Serve an audio file."""
+    return send_file(os.path.join(CONTENT_DIR, filename))
+
+@files_bp.route('/audio', methods=['POST'])
+def upload_audio():
+    """Upload an audio file."""
+    if 'file' not in request.files:
+        return "No file part", 400
+    
+    file = request.files['file']
+    if file.filename == '':
+        return "No selected file", 400
+        
+    if file:
+        filename = file.filename
+        audio_dir = os.path.join(CONTENT_DIR, 'audio')
+        os.makedirs(audio_dir, exist_ok=True)
+        
+        file_path = os.path.join(audio_dir, filename)
+        file.save(file_path)
+        
+        return jsonify({"url": f"/api/audio/audio/{filename}"}), 200

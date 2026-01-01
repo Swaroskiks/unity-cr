@@ -47,7 +47,9 @@
           <span class="filename">{{ currentFilename }}</span>
           <div class="actions">
             <input type="file" ref="fileInput" @change="handleFileUpload" style="display: none" accept="image/*" />
+            <input type="file" ref="audioInput" @change="handleAudioUpload" style="display: none" accept="audio/*" />
             <button @click="triggerUpload" class="upload-btn shake-hover">IMAGE</button>
+            <button @click="triggerAudioUpload" class="upload-btn audio-btn shake-hover">AUDIO</button>
             <button @click="saveFile" class="save-btn shake-hover">SAUVEGARDER</button>
           </div>
         </div>
@@ -108,9 +110,14 @@ const initCreate = () => {
 };
 
 const fileInput = ref<HTMLInputElement | null>(null);
+const audioInput = ref<HTMLInputElement | null>(null);
 
 const triggerUpload = () => {
   fileInput.value?.click();
+};
+
+const triggerAudioUpload = () => {
+  audioInput.value?.click();
 };
 
 const handleFileUpload = async (event: Event) => {
@@ -125,6 +132,23 @@ const handleFileUpload = async (event: Event) => {
       alert('Image uploadée !');
     } catch (e) {
       console.error('Error uploading image', e);
+      alert('Erreur lors de l\'upload.');
+    }
+  }
+};
+
+const handleAudioUpload = async (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  if (target.files && target.files.length > 0) {
+    try {
+      const file = target.files[0];
+      const url = await FileService.uploadAudio(file);
+      // Use markdown image syntax for audio too, we will handle it in the viewer
+      const audioMarkdown = `\n![Audio](${url})\n`;
+      fileContent.value += audioMarkdown;
+      alert('Audio uploadé !');
+    } catch (e) {
+      console.error('Error uploading audio', e);
       alert('Erreur lors de l\'upload.');
     }
   }
@@ -309,6 +333,32 @@ select:focus, input:focus {
 }
 
 .save-btn:hover {
+  background-color: var(--color-primary);
+  color: #000;
+}
+
+.audio-btn {
+  border-color: var(--color-secondary) !important;
+  color: var(--color-secondary) !important;
+  margin-right: 0.5rem;
+}
+
+.audio-btn:hover {
+  background-color: var(--color-secondary) !important;
+  color: #000 !important;
+}
+
+.upload-btn {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.upload-btn:hover {
   background-color: var(--color-primary);
   color: #000;
 }
