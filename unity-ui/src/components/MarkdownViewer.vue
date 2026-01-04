@@ -43,12 +43,20 @@ const processContent = async () => {
     return `<h${depth} id="${slug}">${text}</h${depth}>`;
   };
 
+  const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:5001';
+
   renderer.image = ({ href, title, text }) => {
     const isAudio = href && (href.endsWith('.mp3') || href.endsWith('.wav') || href.endsWith('.ogg') || href.includes('/api/audio/'));
     
     let src = href;
     if (href && !href.startsWith('http') && !href.startsWith('data:')) {
-      src = `http://127.0.0.1:5001${href}`;
+      // Si l'URL commence déjà par /api et que notre API_URL est /api (prod), on ne double pas
+      if (href.startsWith('/api') && API_URL === '/api') {
+        src = href;
+      } else {
+        // Sinon on ajoute le préfixe de l'API
+        src = `${API_URL}${href}`;
+      }
     }
 
     if (isAudio) {

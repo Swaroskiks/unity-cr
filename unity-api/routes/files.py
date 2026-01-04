@@ -73,7 +73,7 @@ def upload_image():
         file.save(file_path)
         
         # Return the relative path or URL that the frontend should use
-        return jsonify({"url": f"/api/images/images/{filename}"}), 200
+        return jsonify({"url": f"/images/images/{filename}"}), 200
 @files_bp.route('/audio/<path:filename>', methods=['GET'])
 def get_audio(filename):
     """Serve an audio file."""
@@ -97,4 +97,4 @@ def upload_audio():
         file_path = os.path.join(audio_dir, filename)
         file.save(file_path)
         
-        return jsonify({"url": f"/api/audio/audio/{filename}"}), 200
+        return jsonify({"url": f"/audio/audio/{filename}"}), 200
