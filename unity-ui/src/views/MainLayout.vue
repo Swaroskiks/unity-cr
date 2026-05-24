@@ -5,8 +5,8 @@
         <h1>UNITY</h1>
       </div>
       <nav class="menu">
-        <router-link to="/app/tds" class="menu-item shake-hover" :class="{ active: $route.path.startsWith('/app/tds') }">TDs</router-link>
         <router-link to="/app/project" class="menu-item shake-hover" :class="{ active: $route.path.startsWith('/app/project') }">PROJET</router-link>
+        <router-link to="/app/demo" class="menu-item shake-hover" :class="{ active: $route.path.startsWith('/app/demo') }">DÉMO</router-link>
         <router-link to="/app/authors" class="menu-item shake-hover" :class="{ active: $route.path.startsWith('/app/authors') }">AUTEURS</router-link>
       </nav>
     </aside>

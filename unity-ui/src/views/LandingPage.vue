@@ -9,7 +9,6 @@
         C'est moche, c'est instable, c'est le projet.
       </p>
       <div class="buttons">
-        <router-link to="/app/tds" class="btn shake-hover">VOIR LES TDS</router-link>
         <router-link to="/app/project" class="btn shake-hover">VOIR LE PROJET</router-link>
       </div>
     </div>

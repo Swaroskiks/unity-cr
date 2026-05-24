@@ -67,6 +67,16 @@ L'idée, c'est de **découpler totalement la logique d'entrée** du reste du cod
 
 Le système de mouvement du joueur repose sur le contrôleur d'animation AC_PlayerController, basé sur un Blend Tree 2D qui gère les transitions entre la marche et la course en fonction de la direction et de la vitesse du personnage. La majorité des animations proviennent de la bibliothèque [Mixamo](https://www.mixamo.com/). Pour celles qui manquaient (comme la marche arrière en étant accroupi) nous sommes passés par Blender pour inverser et adapter une animation existante.
 
+### Adaptation à la Réalité Virtuelle (VR)
+
+Pour renforcer l'immersion et l'angoisse inhérente à l'ambiance psychologique de *Flat*, le jeu a été adapté en Réalité Virtuelle (VR) :
+
+- **Framework & standardisation** : Utilisation d'**OpenXR** et du package **XR Interaction Toolkit (XRI)** d'Unity pour garantir la compatibilité multi-casques (Meta Quest, HTC Vive, etc.).
+- **Contrôles & XR Origin** : Le contrôleur classique à la première personne a été remplacé par un préfab **XR Origin**. La caméra est maintenant directement liée au suivi de mouvement du casque (HMD).
+- **Système de Locomotion** : Implémentation du déplacement continu (Smooth Locomotion) sur le joystick gauche et de la rotation par paliers (Snap Turn) sur le joystick droit pour assurer un confort optimal tout en évitant la cinétose.
+- **Interactions physiques diégétiques** : Remplacement des raycasts par des composants **XR Direct Interactor** et **XR Ray Interactor**. Le joueur interagit désormais directement avec ses mains virtuelles en utilisant la touche *Grip* pour saisir physiquement les clés, ouvrir la porte d'entrée ou activer le disjoncteur.
+- **Interface & Immersion** : Suppression de l'UI 2D en superposition d'écran au profit d'une **UI diégétique en espace monde (World-Space)** intégrée dans l'environnement de l'appartement pour ne jamais couper l'immersion horrifique.
+
 ## Partie Artistique
 
 Lorsque nous avons fini de développer l'idée, nous avons pensé tout d'abord au plan de l'appartement. Nos points de direction étaient l'appartement du personnage (en rouge), celui du voisin (en violet) ainsi que de longs couloirs (en vert clair), typique des Backrooms, un concept popularisé par la culture internet et les "creepypastas". Autour de cette base, nous avons ajouté deux autres appartements (en jaune), des toilettes de palier (en rose) et un débarras commun (en vert foncé) pour ne pas fermer la porte au développement futur du projet.

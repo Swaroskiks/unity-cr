@@ -4,28 +4,7 @@
       <h2 class="glitch" data-text="ADMIN">ADMIN</h2>
       
       <div class="creation-panel">
-        <h3>Nouveau Fichier</h3>
-        <div class="form-group">
-          <label>Type</label>
-          <select v-model="fileType">
-            <option value="TD">TD</option>
-            <option value="Projet">Projet</option>
-          </select>
-        </div>
-
-        <div v-if="fileType === 'TD'" class="form-group">
-          <label>Auteur</label>
-          <select v-model="author">
-            <option value="Mouad">Mouad</option>
-            <option value="Ibraguim">Ibraguim</option>
-          </select>
-        </div>
-
-        <div v-if="fileType === 'TD'" class="form-group">
-          <label>Numéro TD</label>
-          <input type="number" v-model="tdNumber" min="1" placeholder="ex: 1" />
-        </div>
-
+        <h3>Nouveau Projet</h3>
         <button @click="initCreate" class="create-btn shake-hover">CRÉER</button>
       </div>
 
@@ -72,15 +51,12 @@ const fileContent = ref('');
 const isCreating = ref(false);
 
 // Form data
-const fileType = ref('TD');
-const author = ref('Mouad');
-const tdNumber = ref(1);
+const fileType = ref('Projet');
 
 const currentFilename = computed(() => {
   if (selectedFile.value) return selectedFile.value;
   if (isCreating.value) {
-    if (fileType.value === 'Projet') return 'Projet/project.md';
-    return `TDs/${author.value}/td${tdNumber.value}.md`;
+    return 'Projet/project.md';
   }
   return '';
 });
